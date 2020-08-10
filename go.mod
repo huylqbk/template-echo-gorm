@@ -1,4 +1,4 @@
-module tempate-echo-gorm
+module template-echo-gorm
 
 go 1.13
 

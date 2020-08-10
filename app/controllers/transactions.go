@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/labstack/echo/v4"
-	"red-coins/app/helpers"
-	"red-coins/app/models"
-	"red-coins/config"
 	"strconv"
+	"template-echo-gorm/app/helpers"
+	"template-echo-gorm/app/models"
+	"template-echo-gorm/config"
+
+	"github.com/labstack/echo/v4"
 )
 
 // TransactionStore redCoins
@@ -24,7 +25,7 @@ func TransactionStore(c echo.Context) error {
 	if err := c.Bind(&transaction); err != nil {
 		return c.JSON(422, err)
 	}
-	
+
 	value, ok := config.RC.Get("price").Result()
 
 	if ok != nil {

@@ -1,9 +1,9 @@
 package middlewares
 
 import (
-	"red-coins/app/models"
 	"os"
 	"strings"
+	"template-echo-gorm/app/models"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

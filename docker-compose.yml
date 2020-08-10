@@ -9,11 +9,11 @@ services:
     volumes:
       - api:/usr/src/app/
     depends_on:
-      - tempate-echo-gorm-postgres          
+      - template-echo-gorm-postgres          
     networks:
-      - tempate-echo-gorm
+      - template-echo-gorm
 
-  tempate-echo-gorm-postgres:
+  template-echo-gorm-postgres:
     image: postgres:latest
     container_name: full_db_postgres
     environment:
@@ -26,7 +26,7 @@ services:
     volumes:
       - database_postgres:/var/lib/postgresql/data
     networks:
-      - tempate-echo-gorm
+      - template-echo-gorm
     
 volumes:
   api:
@@ -34,5 +34,5 @@ volumes:
 
 # Networks to be created to facilitate communication between containers
 networks:
-  tempate-echo-gorm:
+  template-echo-gorm:
     driver: bridge

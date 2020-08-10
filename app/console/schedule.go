@@ -1,14 +1,15 @@
 package console
 
 import (
-	"github.com/Jeffail/gabs"
-	"github.com/robfig/cron"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
-	"red-coins/config"
+	"template-echo-gorm/config"
+
+	"github.com/Jeffail/gabs"
+	"github.com/robfig/cron"
 )
 
 func Schedule() {
@@ -25,8 +26,8 @@ func getBitcoinPrice() {
 	coinSecret := os.Getenv("COIN_SECRET")
 
 	client := &http.Client{}
-	req, err := http.NewRequest("GET","https://pro-api.coinmarketcap.com/v1/tools/price-conversion", nil)
-	
+	req, err := http.NewRequest("GET", "https://pro-api.coinmarketcap.com/v1/tools/price-conversion", nil)
+
 	if err != nil {
 		log.Panic(err)
 	}
@@ -49,15 +50,15 @@ func getBitcoinPrice() {
 	respBody, _ := ioutil.ReadAll(resp.Body)
 
 	jsonParsed, err := gabs.ParseJSON([]byte(respBody))
-	
+
 	if err != nil {
 		panic(err)
 	}
-	
+
 	value = jsonParsed.Path("data.quote.BRL.price").Data().(float64)
 
 	err = config.RC.Set("price", value, 0).Err()
-	
+
 	if err != nil {
 		log.Panic(err)
 	}

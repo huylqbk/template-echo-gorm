@@ -1,9 +1,10 @@
 package migrations
 
 import (
-	"github.com/jinzhu/gorm"
 	"log"
-	"red-coins/app/models"
+	"template-echo-gorm/app/models"
+
+	"github.com/jinzhu/gorm"
 )
 
 func Migrate(DB *gorm.DB) {

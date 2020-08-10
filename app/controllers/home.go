@@ -1,9 +1,10 @@
 package controllers
 
 import (
+	"template-echo-gorm/app/helpers"
+	"template-echo-gorm/app/models"
+
 	"github.com/labstack/echo/v4"
-	"red-coins/app/helpers"
-	"red-coins/app/models"
 )
 
 // Index redCoins

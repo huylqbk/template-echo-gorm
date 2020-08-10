@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"github.com/labstack/echo/v4"
-	"red-coins/app/helpers"
-	"red-coins/app/models"
 	"strconv"
+	"template-echo-gorm/app/helpers"
+	"template-echo-gorm/app/models"
+
+	"github.com/labstack/echo/v4"
 )
 
 // UserStore redCoins
@@ -22,7 +23,7 @@ import (
 // @Router /api/users [post]
 func UserStore(c echo.Context) error {
 	user := models.User{}
-	
+
 	if err := c.Bind(&user); err != nil {
 		return c.JSON(422, err)
 	}
@@ -101,7 +102,7 @@ func UserDelete(c echo.Context) error {
 	}
 
 	res := models.UserDelete(id)
-	
+
 	if res {
 		return c.JSON(200, "Deleted")
 	}

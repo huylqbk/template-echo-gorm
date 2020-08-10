@@ -1,9 +1,10 @@
 package models
 
 import (
+	"template-echo-gorm/config"
+
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
-	"red-coins/config"
 )
 
 type JwtClaims struct {
@@ -19,7 +20,7 @@ type Login struct {
 func AuthLogin(email string, password string) *User {
 	user := new(User)
 	res := config.DB.Debug().Where("email = ?", email).First(&user)
-	
+
 	if res.Error == nil {
 		err := VerifyPassword(user.Password, password)
 

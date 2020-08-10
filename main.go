@@ -1,9 +1,9 @@
 package main
 
 import (
-	"red-coins/app/router"
-	"red-coins/config"
-	"red-coins/migrations"
+	"template-echo-gorm/app/router"
+	"template-echo-gorm/config"
+	"template-echo-gorm/migrations"
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"

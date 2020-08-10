@@ -1,9 +1,9 @@
 package router
 
 import (
-	"red-coins/app/controllers"
-	"red-coins/app/middlewares"
-	_ "red-coins/docs"
+	"template-echo-gorm/app/controllers"
+	"template-echo-gorm/app/middlewares"
+	_ "template-echo-gorm/docs"
 
 	"log"
 

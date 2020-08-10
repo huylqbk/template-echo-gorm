@@ -1,11 +1,12 @@
 package helpers
 
 import (
+	"os"
+	"template-echo-gorm/app/models"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
-	"os"
-	"red-coins/app/models"
-	"time"
 )
 
 func AuthMakeToken(user *models.User) (string, error) {
@@ -27,10 +28,10 @@ func AuthGetUser(c echo.Context) *models.User {
 	claims := token.Claims.(*models.JwtClaims)
 
 	user := models.UserShow(claims.ID)
-	
+
 	if user != nil {
 		return user
 	}
-	
+
 	return nil
 }
