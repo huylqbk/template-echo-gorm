@@ -19,8 +19,6 @@ require (
 	github.com/mailru/easyjson v0.7.0 // indirect
 	github.com/robfig/cron v1.2.0
 	github.com/stretchr/testify v1.3.0
-	github.com/swaggo/echo-swagger v0.0.0-20190329130007-1219b460a043
-	github.com/swaggo/swag v1.6.3
 	github.com/thedevsaddam/gojsonq v2.3.0+incompatible
 	github.com/tidwall/gjson v1.3.4
 	github.com/urfave/cli v1.22.1 // indirect
