@@ -3,10 +3,8 @@ package logging
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"time"
 
-	"github.com/go-chi/chi/middleware"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -67,18 +65,4 @@ func (l *StructuredLoggerEntry) Panic(v interface{}, stack []byte) {
 		"stack": string(stack),
 		"panic": fmt.Sprintf("%+v", v),
 	})
-}
-
-// LogEntrySetField adds a field to the request scoped logrus.FieldLogger.
-func LogEntrySetField(r *http.Request, key string, value interface{}) {
-	if entry, ok := r.Context().Value(middleware.LogEntryCtxKey).(*StructuredLoggerEntry); ok {
-		entry.Logger = entry.Logger.WithField(key, value)
-	}
-}
-
-// LogEntrySetFields adds multiple fields to the request scoped logrus.FieldLogger.
-func LogEntrySetFields(r *http.Request, fields map[string]interface{}) {
-	if entry, ok := r.Context().Value(middleware.LogEntryCtxKey).(*StructuredLoggerEntry); ok {
-		entry.Logger = entry.Logger.WithFields(fields)
-	}
 }
