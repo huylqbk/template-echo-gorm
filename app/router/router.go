@@ -2,6 +2,7 @@ package router
 
 import (
 	"template-echo-gorm/app/controllers"
+	"template-echo-gorm/app/errors"
 	"template-echo-gorm/app/middlewares"
 
 	"log"
@@ -15,6 +16,7 @@ func Init(app *echo.Echo) {
 	app.Use(middlewares.Logger())
 	app.Use(middlewares.Secure())
 	app.Use(middlewares.Recover())
+	app.HTTPErrorHandler = errors.HttpErrorHandler
 
 	app.GET("/", controllers.Index())
 
