@@ -11,14 +11,6 @@ import (
 	"gopkg.in/tylerb/graceful.v1"
 )
 
-// @title redCoins
-// @version 1.0
-// @description This is a sample server
-
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
-
 func main() {
 	app := echo.New()
 
