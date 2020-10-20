@@ -5,8 +5,6 @@ import (
 	"template-echo-gorm/app/errors"
 	"template-echo-gorm/app/middlewares"
 
-	"log"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -37,6 +35,4 @@ func Init(app *echo.Echo) {
 			transactions.POST("", controllers.TransactionStore())
 		}
 	}
-
-	log.Printf("Server started...")
 }

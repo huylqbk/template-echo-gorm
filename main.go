@@ -1,9 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"template-echo-gorm/app/router"
-	"template-echo-gorm/config"
-	"template-echo-gorm/migrations"
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -14,16 +13,17 @@ import (
 func main() {
 	app := echo.New()
 
-	db := config.Database()
+	// db := config.Database()
 
-	migrations.Migrate(db)
+	// migrations.Migrate(db)
 
-	defer db.Close()
+	// defer db.Close()
 
 	// config.Redis()
 	// console.Schedule()
 	router.Init(app)
 
 	app.Server.Addr = ":3333"
+	fmt.Println("Server started at ", app.Server.Addr)
 	graceful.ListenAndServe(app.Server, 5*time.Second)
 }

@@ -18,13 +18,13 @@ require (
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/mailru/easyjson v0.7.0 // indirect
 	github.com/robfig/cron v1.2.0
+	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.3.0
 	github.com/thedevsaddam/gojsonq v2.3.0+incompatible
 	github.com/tidwall/gjson v1.3.4
 	github.com/urfave/cli v1.22.1 // indirect
 	golang.org/x/crypto v0.0.0-20191029031824-8986dd9e96cf
 	golang.org/x/net v0.0.0-20191101175033-0deb6923b6d9 // indirect
-	golang.org/x/tools v0.0.0-20191101200257-8dbcdeb83d3f // indirect
 	gopkg.in/go-playground/validator.v9 v9.29.0
 	gopkg.in/tylerb/graceful.v1 v1.2.15
 	gopkg.in/yaml.v2 v2.2.4 // indirect
