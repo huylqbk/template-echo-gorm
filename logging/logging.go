@@ -1,68 +1,100 @@
-package logging
+package logger
 
-import (
-	"fmt"
-	"log"
-	"time"
+import "errors"
 
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+var log Logger
+
+//Fields Type to pass when we want to call WithFields for structured logging
+type Fields map[string]interface{}
+
+const (
+	//Debug has verbose message
+	Debug = "debug"
+	//Info is default log level
+	Info = "info"
+	//Warn is for logging messages about possible issues
+	Warn = "warn"
+	//Error is for logging errors
+	Error = "error"
+	//Fatal is for logging fatal messages. The sytem shutsdown after logging the message.
+	Fatal = "fatal"
+)
+
+const (
+	//InstanceZapLogger will be used to create Zap instance for the logger
+	InstanceZapLogger int = iota
 )
 
 var (
-	// Logger is a configured logrus.Logger.
-	Logger *logrus.Logger
+	errInvalidLoggerInstance = errors.New("Invalid logger instance")
 )
 
-// StructuredLogger is a structured logrus Logger.
-type StructuredLogger struct {
-	Logger *logrus.Logger
+//Logger is our contract for the logger
+type Logger interface {
+	Debugf(format string, args ...interface{})
+
+	Infof(format string, args ...interface{})
+
+	Warnf(format string, args ...interface{})
+
+	Errorf(format string, args ...interface{})
+
+	Fatalf(format string, args ...interface{})
+
+	Panicf(format string, args ...interface{})
+
+	WithFields(keyValues Fields) Logger
 }
 
-// NewLogger creates and configures a new logrus Logger.
-func NewLogger() *logrus.Logger {
-	Logger = logrus.New()
-	if viper.GetBool("log_textlogging") {
-		Logger.Formatter = &logrus.TextFormatter{
-			DisableTimestamp: true,
+// Configuration stores the config for the Logger
+// For some loggers there can only be one level across writers, for such the level of Console is picked by default
+type Configuration struct {
+	EnableConsole     bool
+	ConsoleJSONFormat bool
+	ConsoleLevel      string
+	EnableFile        bool
+	FileJSONFormat    bool
+	FileLevel         string
+	FileLocation      string
+}
+
+//NewLogger returns an instance of Logger
+func NewLogger(config Configuration, loggerInstance int) error {
+	if loggerInstance == InstanceZapLogger {
+		logger, err := newZapLogger(config)
+		if err != nil {
+			return err
 		}
-	} else {
-		Logger.Formatter = &logrus.JSONFormatter{
-			DisableTimestamp: true,
-		}
+		log = logger
+		return nil
 	}
-
-	level := viper.GetString("log_level")
-	if level == "" {
-		level = "error"
-	}
-	l, err := logrus.ParseLevel(level)
-	if err != nil {
-		log.Fatal(err)
-	}
-	Logger.Level = l
-	return Logger
+	return errInvalidLoggerInstance
 }
 
-// StructuredLoggerEntry is a logrus.FieldLogger.
-type StructuredLoggerEntry struct {
-	Logger logrus.FieldLogger
+func Debugf(format string, args ...interface{}) {
+	log.Debugf(format, args...)
 }
 
-func (l *StructuredLoggerEntry) Write(status, bytes int, elapsed time.Duration) {
-	l.Logger = l.Logger.WithFields(logrus.Fields{
-		"resp_status":       status,
-		"resp_bytes_length": bytes,
-		"resp_elapsed_ms":   float64(elapsed.Nanoseconds()) / 1000000.0,
-	})
-
-	l.Logger.Infoln("request complete")
+func Infof(format string, args ...interface{}) {
+	log.Infof(format, args...)
 }
 
-// Panic prints stack trace
-func (l *StructuredLoggerEntry) Panic(v interface{}, stack []byte) {
-	l.Logger = l.Logger.WithFields(logrus.Fields{
-		"stack": string(stack),
-		"panic": fmt.Sprintf("%+v", v),
-	})
+func Warnf(format string, args ...interface{}) {
+	log.Warnf(format, args...)
+}
+
+func Errorf(format string, args ...interface{}) {
+	log.Errorf(format, args...)
+}
+
+func Fatalf(format string, args ...interface{}) {
+	log.Fatalf(format, args...)
+}
+
+func Panicf(format string, args ...interface{}) {
+	log.Panicf(format, args...)
+}
+
+func WithFields(keyValues Fields) Logger {
+	return log.WithFields(keyValues)
 }
