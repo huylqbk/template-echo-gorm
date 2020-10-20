@@ -12,7 +12,7 @@ type httpError struct {
 	Message string `json:"message"`
 }
 
-func newHTTPError(code int, key string, msg string) *httpError {
+func NewHTTPError(code int, key string, msg string) *httpError {
 	return &httpError{
 		code:    code,
 		Key:     key,
@@ -48,7 +48,7 @@ func HttpErrorHandler(err error, c echo.Context) {
 				c.Logger().Error(err)
 			}
 		} else {
-			err := c.JSON(code, newHTTPError(code, key, msg))
+			err := c.JSON(code, NewHTTPError(code, key, msg))
 			if err != nil {
 				c.Logger().Error(err)
 			}
